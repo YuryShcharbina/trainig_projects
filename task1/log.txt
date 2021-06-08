@@ -1,0 +1,11 @@
+commit 7bf60a9d89c975463419990c6048bf4c5026469d
+Author: Yury Shcharbina <yurickch@gmail.com>
+Date:   Tue Jun 8 21:24:38 2021 +0300
+
+    modified status.txt
+
+commit 44921182355c91c1d800884d510cf323cba98bb7
+Author: Yury Shcharbina <yurickch@gmail.com>
+Date:   Tue Jun 8 21:20:50 2021 +0300
+
+    add .gitignore
