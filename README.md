@@ -1,5 +1,4 @@
 # DevOps training project
-___
 ## Description
 This is the project made during the DevOps [Exadel](https://exadel.com/) Internship June2021.
 It includes different
