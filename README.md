@@ -7,7 +7,7 @@ tasks which covered all aspects in DevOps workflow.
 ## Project structure
 Each task located in separate folder with appropriate name.
 * Task1 - the purpose of this task was make a project repository using VSC Git
-
+* Task2 - in this task created Web Server on EC2 instance [link](http://13.53.43.60)
 ___
 ### Author
 Yury Shcharbina  
