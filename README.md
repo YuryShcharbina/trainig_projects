@@ -8,7 +8,10 @@ tasks which covered all aspects in DevOps workflow.
 Each task located in separate folder with appropriate name.
 * Task1 - the purpose of this task was make a project repository using VSC Git
 * Task2 - in this task created Web Server on EC2 instance [link](http://13.53.43.60)
-* Task3 - working with Docker
+* Task3 - working with Docker:
+  * setup_docker.sh for automatic installation docker in debian
+  * in subtask3 created image based on debian with Apache web server,
+    and updating on html page value of environment variable DEVOPS on startup if provided
 ___
 ### Author
 Yury Shcharbina  
