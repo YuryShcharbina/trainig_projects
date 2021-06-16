@@ -1,0 +1,23 @@
+# This is a test workflow to create docker image
+
+name: test-docker
+
+ 
+on:
+  push:
+    branches: [ master ]
+  
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: goto in build directory
+        run: cd task3/subtask3
+      - name: show directory
+        run: ls -la
+
