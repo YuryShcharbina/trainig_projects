@@ -25,6 +25,8 @@ jobs:
         with:
          username: ${{ secrets.DOCKER_USER }}
          password: ${{ secrets.DOCKER_PASS }}
+         file: task3/subtask3/Dockerfile
          repository: yurickch/test_web
+         push: true
          tags: latest
       
