@@ -7,6 +7,7 @@ RUN  echo "ServerName localhost" >> /etc/apache2/apache2.conf
 ENV DEVOPS=master
 RUN mkdir /app/
 COPY update_html.sh /app/
+RUN chmod +x /app/update_html.sh
 
 CMD ["/app/update_html.sh"]
 
