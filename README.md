@@ -10,11 +10,14 @@ Each task located in separate folder with appropriate name.
 * Task2 - in this task created Web Server on EC2 instance [link](http://13.53.43.60)
 * Task3 - working with Docker:
   * Created setup_docker.sh for automatic installation docker in debian
+  * Changed image kitematic/hello-world-nginx [link](http://13.51.163.36) 
   * In subtask3 built image based on debian with Apache web server,
     and updating on html page value of environment variable DEVOPS on
     startup, if provided
   * Image from subtask3 on Docker Hub [link](https://hub.docker.com/r/yurickch/test_web)
   * Created docker compose file with separate .env files for each service
+___
+
 ___
 ### Author
 Yury Shcharbina  
