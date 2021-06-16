@@ -8,7 +8,7 @@ ENV DEVOPS=master
 RUN mkdir /app/
 COPY update_html.sh /app/
 RUN chmod +x /app/update_html.sh
-ENV TZ Europe/Moskow
+ENV TZ Europe/Moscow
 EXPOSE 80
 
 CMD ["/app/update_html.sh"]
