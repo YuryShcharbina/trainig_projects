@@ -33,5 +33,5 @@ jobs:
          context: ./task3/subtask3
          file: ./task3/subtask3/Dockerfile
          push: true
-         tags: latest
+         tags: yurickch/test_web:latest
       
