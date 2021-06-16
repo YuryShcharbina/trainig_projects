@@ -30,8 +30,8 @@ jobs:
       - name: build - push
         uses: docker/build-push-action@v2
         with:
-         context: task3/subtask3/
-         file: task3/subtask3/Dockerfile
+         context: .
+         file: ./task3/subtask3/Dockerfile
          push: true
          tags: latest
       
