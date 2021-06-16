@@ -20,4 +20,11 @@ jobs:
         run: |
          cd task3/subtask3/
          ls -la
-
+         docker build . -t yurickch/test_web:latest
+      - uses: docker/build-push-action@v1
+        with:
+         username: ${{ secrets.DOCKER_USER }}
+         password: ${{ secrets.DOCKER_PASS }}
+         repository: yurickch/test_web
+         tags: latest
+      
