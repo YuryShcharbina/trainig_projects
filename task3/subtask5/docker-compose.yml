@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  web:
+    image: "yurickch/test_web:v1"
+    env_file: .env.web
+    ports:
+     - "8081-8085:80"
+
+  java:
+    image: "jetty"
+    env_file: .env.java
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: "postgres"
+    env_file: .env.db
+    ports:
+      - "5432:5432"
