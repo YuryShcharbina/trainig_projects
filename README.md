@@ -11,7 +11,8 @@ Each task located in separate folder with appropriate name.
 * Task3 - working with Docker:
   * setup_docker.sh for automatic installation docker in debian
   * in subtask3 created image based on debian with Apache web server,
-    and updating on html page value of environment variable DEVOPS on startup if provided
+    and updating on html page value of environment variable DEVOPS on
+    startup if provided [link](https://hub.docker.com/r/yurickch/test_web)
 ___
 ### Author
 Yury Shcharbina  
