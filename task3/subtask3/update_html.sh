@@ -11,7 +11,7 @@ cat > /var/www/html/index.html << EOF
     </head>
 <body>
 	<h2>Hello world</h2>
-  <h1>Update repo: $date</h1>
+  <h1>Container started: $date</h1>
 	<p>$text</p>
 </body>
 </html>
