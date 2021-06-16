@@ -16,6 +16,8 @@ Each task located in separate folder with appropriate name.
   * Image from subtask3 on Docker Hub [link](https://hub.docker.com/r/yurickch/test_web)
   * Created docker compose file with separate .env files for each service
 ___
+<br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
+___
 ### Author
 Yury Shcharbina  
 e-mail: yurickch@gmail.com
