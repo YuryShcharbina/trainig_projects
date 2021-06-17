@@ -15,7 +15,11 @@ Each task located in separate folder with appropriate name.
     and updating on html page value of environment variable DEVOPS on
     startup, if provided
   * Image from subtask3 on Docker Hub [link](https://hub.docker.com/r/yurickch/test_web)
-  * Created docker compose file with separate .env files for each service
+  * Created docker compose file with separate .env files for each service.  
+    Services started in AWS [web1](http://13.51.163.36:8081)
+    [web2](http://13.51.163.36:8082) [web3](http://13.51.163.36:8083)
+    [web4](http://13.51.163.36:8084) [web5](http://13.51.163.36:8081)
+    [java](http://13.51.163.36:8888)
 ___
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
 ___
