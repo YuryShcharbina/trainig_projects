@@ -1,0 +1,35 @@
+- name: Install Docker to Ubuntu
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Update repo and install dependencies
+    apt:
+      pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+      state: latest
+      update_cache: yes
+
+  - name: Install Docker repo key
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Add Docker repo
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable 
+
+  - name: Install Docker packages
+    apt:
+      pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose
+
+  - name: Add user to docker group
+    shell: usermod -aG docker ubuntu
+
+  - name: Check installation
+    shell: docker run hello-world

@@ -7,19 +7,18 @@ tasks which covered all aspects in DevOps workflow.
 ## Project structure
 Each task located in separate folder with appropriate name.
 * Task1 - the purpose of this task was make a project repository using VSC Git
-* Task2 - in this task created Web Server on EC2 instance [link](http://13.53.43.60)
+* Task2 - in this task created Web Server on EC2 instance
 * Task3 - working with Docker:
   * Created setup_docker.sh for automatic installation docker in debian
-  * Changed image kitematic/hello-world-nginx [link](http://13.51.163.36) 
+  * Changed image kitematic/hello-world-nginx
   * In subtask3 built image based on debian with Apache web server,
     and updating on html page value of environment variable DEVOPS on
     startup, if provided
   * Image from subtask3 on Docker Hub [link](https://hub.docker.com/r/yurickch/test_web)
   * Created docker compose file with separate .env files for each service.  
-    Services started in AWS [web1](http://13.51.163.36:8081)
-    [web2](http://13.51.163.36:8082) [web3](http://13.51.163.36:8083)
-    [web4](http://13.51.163.36:8084) [web5](http://13.51.163.36:8081)
-    [java](http://13.51.163.36:8888)
+* Task4 - working with ansible:
+  * in main task installed ansible, made ping-pong to servers and  
+    made playbook file to install docker on servers
 ___
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
 ___

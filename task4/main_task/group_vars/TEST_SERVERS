@@ -1,0 +1,2 @@
+ansible_ssh_private_key_file  : /home/ubuntu/.ssh/keys/vm1_ext
+ansible_user                  : ubuntu
