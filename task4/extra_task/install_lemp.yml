@@ -1,0 +1,41 @@
+- name: install LEMP stack in Docker
+  hosts: "{{ passed_hosts }}"
+
+  tasks:
+  - name: generate index html
+    template:
+      src: ./lemp/public/index.j2
+      dest: ~/lemp/public/index.php 
+  
+  - name: copy working directory to instance
+    copy:
+      src: ./lemp/
+      dest: ~/lemp/
+    with_items:
+      - conf/*
+      - db_data/*
+      - docker-compose.yml
+      - nginx/*
+      - php/* 
+
+  - name: build phpfpm image
+    docker_image:
+      build:
+        path: ~/lemp/php
+      name: phpfpm_test
+      source: build
+
+  - name: deploy lemp stack
+    command: docker-compose up -d  
+    args:
+      chdir: ~/lemp/   
+
+  - name: check lemp status
+    shell: docker-compose ps
+    args:
+      chdir: ~/lemp/
+    register: status_output
+
+  - debug:
+      var: status_output.stdout_lines
+      
