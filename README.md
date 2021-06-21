@@ -19,6 +19,8 @@ Each task located in separate folder with appropriate name.
 * Task4 - working with ansible:
   * in main task installed ansible, made ping-pong to servers and  
     made playbook file to install docker on servers
+  * in extra task made playbooks for install docker and LEMP stack  
+  with dynamic inventory aws_ec2 plugin and jinja template 
 ___
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
 ___

@@ -1,0 +1,66 @@
+- name: Install Docker to Ubuntu
+  hosts: "{{ passed_hosts }}"
+  become: yes
+
+  tasks:
+  - name: Update repo and install dependencies
+    apt:
+      pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+      state: latest
+      update_cache: yes
+
+  - name: Install Docker repo key
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Add Docker repo
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable 
+
+  - name: Install Docker packages
+    apt:
+      pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - python3-docker*
+
+  - user:
+      name: ubuntu
+      groups: docker
+      append: yes
+  - name: reset
+    meta: reset_connection
+
+  - name: Update docker-compose to version 1.29.2
+    get_url:
+      url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+      dest: ~/docker-compose
+      mode: "+x"
+
+  - name: chek docker-compose
+    stat: path=~/docker-compose
+    register: docker_compose
+  
+  - name: move docker-compose
+    command: mv ~/docker-compose /usr/local/bin/docker-compose
+    when: docker_compose.stat.exists
+
+  - name: create symbolic link to /usr/bin/docker-compose
+    file:
+      src: /usr/local/bin/docker-compose
+      dest: /usr/bin/docker-compose   
+      state: link
+  
+  - name: restart docker service
+    systemd:
+      name: docker.service
+      state: restarted
+
+  - name: Check installation
+    shell: docker run --rm hello-world
+  
+  
