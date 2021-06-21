@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    links:
+      - phpfpm
+    volumes:
+      - ./public:/myapps
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - phpfpm
+
+  phpfpm:
+    image: phpfpm_test
+    volumes:
+      - ./public:/myapps
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    image: "mariadb"
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./mariadb/my.cnf:/etc/mysql/conf.d/my.cnf  
+    env_file:
+      - ./conf/mysql.env
+
+  phpmyadmin:
+    image: "phpmyadmin/phpmyadmin"
+    ports:
+      - "8080:80"
+    links:
+      - mysql
+    env_file:
+      - ./conf/.env.phpmyadmin
+    depends_on:
+      - mysql
+
+volumes:
+  mysqldata: 
