@@ -1,0 +1,10 @@
+pipeline {
+    agent {label 'ubuntu_host'}
+    stages {
+        stage('Testing') {
+            steps {
+                sh 'docker ps -a'
+            }
+        }
+    }
+}
