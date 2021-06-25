@@ -1,0 +1,37 @@
+pipeline {
+    agent { label 'ubuntu_docker' }
+    environment{
+        PASSWORD = credentials('PASSWORD')
+    }
+    stages {
+        stage('Pull from git') {
+            steps {
+                git credentialsId: 'jenkins_git', url: 'git@github.com:YuryShcharbina/training_projects.git'
+            }
+        }
+        stage('Check files'){
+            steps{
+                sh '''
+                    cd task3/subtask3
+                    ls -lh
+                '''
+                echo "Check Finished"
+            }
+        }
+        stage('Build image'){
+            steps{
+                sh '''
+                    cd task3/subtask3
+                    docker build -t test_app .
+                '''
+            }
+        }
+        stage('Deploy container'){
+            steps{
+                sh '''
+                    docker run -d --rm -e PASSWORD=$PASSWORD -e DEVOPS=TEST_REMOTE_JENKINS -p 80:80 --name test_deploy test_app
+                '''
+            }
+        }
+    }
+}
