@@ -1,0 +1,6 @@
+- name: Install Docker on Ubuntu server
+  hosts: all
+
+  roles:
+    - { role: install_docker, become: yes }
+    - install_jenkins

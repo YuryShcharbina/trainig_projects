@@ -1,0 +1,55 @@
+---
+- name: Install Java 11 runtime environment
+  apt:
+    pkg:
+      - openjdk-11-jre
+    state: present
+    update_cache: yes
+  become: yes
+
+
+- name: create jenkins working directory
+  file:
+    path: "./{{ dest_folder }}"
+    state: directory
+
+- name: create jenkins data directories
+  file:
+    path: "./{{ dest_folder }}/{{ item }}"
+    state: directory
+  loop:
+    - jenkins_data
+    - jenkins_agent_data
+
+- name: copy Dockerfile
+  copy:
+    src: "Dockerfile"
+    dest: "./{{ dest_folder }}"
+
+- name: build jenkins image
+  community.docker.docker_image:
+    name: myjenkins
+    build:
+      path: "./{{ dest_folder }}"
+    source: build
+
+- name: start jenkins container
+  community.docker.docker_container:
+    container_default_behavior: no_defaults
+    name: jenkins_master
+    image: myjenkins
+    detach: yes
+    auto_remove: yes
+    state: started
+    ports:
+      - "8080:8080"
+    volumes: 
+      - "{{ dest_folder }}/jenkins_data:/var/jenkins_home"
+
+- shell: cat {{ dest_folder }}/jenkins_data/secrets/initialAdminPassword
+  register: init_pass
+
+- name: jenkins initial password
+  debug:
+    msg:
+      - "{{ init_pass.stdout_lines }}"  
