@@ -12,7 +12,7 @@ cat > /var/www/html/index.html << EOF
 <body>
 	<h2>Hello world</h2>
 	<h1>Container started: $date</h1>
-	<p>Test for jenkins pipeline from github</p>
+	<p>Test for jenkins pipeline from github run in docker container</p>
 	<p>$text</p>
 </body>
 </html>
