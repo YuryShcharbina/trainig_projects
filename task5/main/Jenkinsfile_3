@@ -1,5 +1,8 @@
 pipeline {
     agent {label 'ubuntu_host'}
+    environment{
+        PASSWORD = credentials('PASSWORD')
+    }
     stages {
         stage('Pull from git') {
             steps {
@@ -26,6 +29,13 @@ pipeline {
         stage('Check build'){
             steps{
                 sh 'docker inspect test_jenkins'
+            }
+        }
+		stage('Run docker container') {
+            steps {
+                sh '''
+                docker run --rm -d -e PASSWORD=$PASSWORD -e DEVOPS=JENKINS_TEST -p 80:80 --name test_prod test_jenkins
+                '''
             }
         }
     }
