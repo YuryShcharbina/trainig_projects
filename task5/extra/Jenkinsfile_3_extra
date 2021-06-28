@@ -1,0 +1,53 @@
+pipeline {
+    agent { label 'ubuntu_docker' }
+
+    stages {
+        stage('Create local registry') {
+            steps {
+                sh'''
+                    docker run -d -p 5000:5000 --restart=always --name test_registry registry:2
+                '''
+            }
+        }
+        stage('Pull image from Dockerhub'){
+            steps{
+                sh'''
+                    docker pull yurickch/test_web:latest
+                '''
+            }
+        }
+        stage('Pull image to thr local registry'){
+            steps{
+                sh'''
+                    docker tag yurickch/test_web:latest localhost:5000/my_web
+                    docker push localhost:5000/my_web
+                    docker images
+                '''
+            }
+        }
+        stage('Remove images from Docker host'){
+            steps{
+                sh'''
+                    docker rmi yurickch/test_web:latest
+                    docker rmi localhost:5000/my_web
+                    docker images
+                '''
+            }
+        }
+        stage('Pull image from local registry'){
+            steps{
+                sh'''
+                    docker pull localhost:5000/my_web
+                    docker images
+                '''
+            }
+        }
+        stage('Deploy test image'){
+            steps{
+                sh'''
+                    docker run --rm -d -p 80:80 -e DEVOPS=TEST_LOCAL_REGISTRY --name test_web_deploy localhost:5000/my_web
+                '''
+            }
+        }
+    }
+}

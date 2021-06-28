@@ -32,6 +32,11 @@ Each task located in separate folder with appropriate name.
      * First Pipeline only execute one command on host machine
       * Second Pipeline pull files from this repository, build Docker image  
   from task3 and run Docker container
+  * extra tasks:
+      * Jenkins_1_extra - deploy on remote host image from Dockerfile from Github
+      * made ansible playbook for install Jenkins in Docker container
+      * Jenkins_2_extra - start Docker local registry, pull into it image from Dockerhub  
+  and deploy the image on remote host
     
 ___
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
