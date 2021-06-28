@@ -21,23 +21,7 @@ Each task located in separate folder with appropriate name.
     made playbook file to install docker on servers
   * in extra task made playbooks for install docker and LEMP stack  
   with dynamic inventory aws_ec2 plugin and jinja template 
-* Task5 - working with Jenkins:
-  * in main part on AWS EC2 instance installed Docker and Java 11.  
-     * Jenkins run in Docker container from image made from Dockerfile.  
-     * Command for start container: docker run --name test_docker --rm \  
-    -d -p 8080:8080 -v ~/test_jenkins/jenkins_data:/var/jenkins_home mytestjenkins  
-     * In Jenkins made three build agents: one on host instance and  
-    two on separate AWS EC2 instances(one for Docker, and one for Ansible)  
-     * Added credentials: ssh key for git hub and secret text for Docker env
-     * First Pipeline only execute one command on host machine
-      * Second Pipeline pull files from this repository, build Docker image  
-  from task3 and run Docker container
-  * extra tasks:
-      * Jenkins_1_extra - deploy on remote host image from Dockerfile from Github
-      * made ansible playbook for install Jenkins in Docker container
-      * Jenkins_2_extra - start Docker local registry, pull into it image from Dockerhub  
-  and deploy the image on remote host
-    
+* Task5 - working with Jenkins
 ___
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master"><br>
 ___
