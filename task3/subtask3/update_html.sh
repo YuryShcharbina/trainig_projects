@@ -1,7 +1,7 @@
 #!/bin/sh
 
 text="DEVOPS=$(printenv DEVOPS)"
-date=$(date +"%Y-%M-%d %H:%M:%S")
+date=$(date +"%Y-%m-%d %H:%M:%S")
 
 cat > /var/www/html/index.html << EOF
 <!DOCTYPE html>
