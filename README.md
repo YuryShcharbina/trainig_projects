@@ -23,7 +23,7 @@ Each task located in separate folder with appropriate name.
   with dynamic inventory aws_ec2 plugin and jinja template 
 * Task5 - working with Jenkins
 ___
-#### Jobs status 
+#### Last jobs status 
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master">
 [![Build Status](http://13.53.94.124:8080/buildStatus/icon?job=Pipeline_test_2&subject=Jenkins_test_pipeline)](http://13.53.94.124:8080/job/Pipeline_test_2/)  
 ___
