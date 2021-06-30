@@ -61,6 +61,9 @@ and click **Download now and install after restart**:
 * Embeddable Build Status
 * Role-based Authorization Strategy
 * Authorize Project
+* Docker
+* Docker API  
+* Docker pipeline
 ### Setup Global Security
 For configuration global security parameters got to **Manage Jenkins-Security->Configure Global Security>**:   
 In **Authentication** field check ***Disable remember me***  
