@@ -25,7 +25,6 @@ Each task located in separate folder with appropriate name.
 ___
 #### Last jobs status 
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master">
-[![Build Status](http://13.53.94.124:8080/buildStatus/icon?job=Pipeline_test_2&subject=Jenkins_test_pipeline)](http://13.53.94.124:8080/job/Pipeline_test_2/)  
 ___
 
 
