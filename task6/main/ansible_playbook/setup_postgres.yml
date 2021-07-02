@@ -1,0 +1,7 @@
+- name: Deploy Postgresql database
+  hosts: all
+
+  roles:
+    - { role: install_psql, become: yes}
+    - postgresql_up 
+    - create_test_db 

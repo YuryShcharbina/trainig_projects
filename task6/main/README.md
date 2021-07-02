@@ -1,5 +1,5 @@
 ### Work with Postgresql
 
 ```
-select Task1,Task2,Task3,Task4 from result where id=(select id from students where student ~'Михаил');
+select students.student, task1, task2, task3, task4 from students,result where students.studentid=result.studentid and students.student ~ 'Щербина';
 ```

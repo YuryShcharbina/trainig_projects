@@ -1,0 +1,46 @@
+---
+- name: Create test database
+  community.postgresql.postgresql_db:
+    name: test_students
+    login_user: postgres
+    login_password: "{{ db_password }}"
+    login_host: localhost
+
+- name: Copy dump file for restore
+  copy:
+    src: "test_dump.sql"
+    dest: "/tmp"
+
+- name: Restore database from dump
+  community.postgresql.postgresql_db:
+    name: test_students
+    state: restore
+    target: /tmp/test_dump.sql
+    login_user: postgres
+    login_password: "{{ db_password }}"
+    login_host: localhost
+
+- name: Check restored database, show students table
+  community.postgresql.postgresql_query:
+    db: test_students
+    login_user: postgres
+    login_password: "{{ db_password }}"
+    login_host: localhost
+    query: SELECT * FROM students
+  register: students
+
+
+- name: Check restored database, show result table
+  community.postgresql.postgresql_query:
+    db: test_students
+    login_user: postgres
+    login_password: "{{ db_password }}"
+    login_host: localhost
+    query: SELECT * FROM result
+  register: results
+
+- ansible.builtin.debug:
+    var: students
+
+- ansible.builtin.debug:
+    var: results

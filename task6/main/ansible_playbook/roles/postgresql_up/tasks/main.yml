@@ -1,0 +1,12 @@
+---
+- name: Create db container
+  community.docker.docker_container:
+    name: test_db
+    image: postgres
+    container_default_behavior: no_defaults
+    auto_remove: yes
+    detach: yes
+    ports:
+      - "5432:5432"
+    env:
+      POSTGRES_PASSWORD: "{{ db_password }}"
