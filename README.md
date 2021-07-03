@@ -22,6 +22,7 @@ Each task located in separate folder with appropriate name.
   * in extra task made playbooks for install docker and LEMP stack  
   with dynamic inventory aws_ec2 plugin and jinja template 
 * Task5 - working with Jenkins
+* Task6 - working with Postgresql
 ___
 #### Last jobs status 
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master">
