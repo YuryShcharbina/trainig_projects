@@ -34,7 +34,7 @@ DROP TABLE
 ```
 
 ### Ansible playbook for logical replication
-Made several roles for installation postgresql on master and slave nodes, configure them for logical replication,
+Made several roles for installation postgresql on master and slave node, configure them for logical replication,
 and load test data to master server
 
 ### Run Ansible playbook in Jenkins pipeline
