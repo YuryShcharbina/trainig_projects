@@ -29,9 +29,19 @@
   copy:
     src: "{{ item }}"
     dest: /etc/postgresql/13/main/
-  with_fileglob: "files/p*"  
+  with_fileglob: "files/master/p*"  
+  notify:
+    - Restart postgresql
+  when: inventory_hostname ==  "db_serv_master"  
+
+- name: Copy config files to master server
+  copy:
+    src: "{{ item }}"
+    dest: /etc/postgresql/13/main/
+  with_fileglob: "files/slave/p*"  
   notify:
   - Restart postgresql
+  when: inventory_hostname == "db_serv_slave"
 
 - name: set postgres user password
   become: yes
