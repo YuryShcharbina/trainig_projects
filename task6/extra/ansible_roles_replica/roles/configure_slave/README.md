@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Configure slave server for logical replication
+Configure slave server
 
 Author Information
 ------------------

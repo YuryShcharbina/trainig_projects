@@ -17,3 +17,8 @@
   hosts: db_serv_master
   roles:
     - load_data_to_db 
+
+- name: Check data transfer
+  hosts: all
+  roles:
+    - check_db_data

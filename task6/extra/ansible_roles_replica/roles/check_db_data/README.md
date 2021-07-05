@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Load data to database test_students on master server
+Test check query for database test_students
 
 Author Information
 ------------------

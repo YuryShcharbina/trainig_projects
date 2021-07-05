@@ -48,7 +48,7 @@ Now you can make different actions with your database. For example, to view stud
 $ psql -h localhost -U postgres -W test_students \
   -c "select students.student, task1, task2, task3, task4 \
   from students,result where students.studentid=result.studentid \
-  and students.student ~ 'Щербина';
+  and students.student ~ 'Щербина';"
 ```
 after you enter the postgres user password, you should see the output:
 ```angular2html

@@ -1,61 +1,10 @@
 ---
-- name: Copy config files to master server
-  copy:
-    src: "{{ item }}"
-    dest: /etc/postgresql/13/main/
-  with_fileglob: "files/p*"  
-  notify:
-  - Restart postgresql
-
-- name: set postgres user password
-  become: yes
-  become_method: sudo
-  become_user: postgres
-  community.postgresql.postgresql_user:
-    name: postgres
-    password: "{{ db_password }}" 
-
-- name: create test database
-  community.postgresql.postgresql_db:
-    name: test_students
-    state: present
-    login_user: postgres
-    login_password: "{{ db_password }}"
-    login_host: localhost
-
-- name: ctreate table students
-  community.postgresql.postgresql_table:
-    db: test_students
-    name: students
-    columns:
-      - id serial primary key
-      - student varchar(50) not null
-      - studentid int not null  
-    login_user: postgres
-    login_password: "{{ db_password }}"
-    login_host: localhost
-  
-- name: ctreate table result
-  community.postgresql.postgresql_table:
-    db: test_students
-    name: result
-    columns:
-      - id serial primary key
-      - studentid int not null  
-      - task1 varchar(20) not null  
-      - task2 varchar(20) not null  
-      - task3 varchar(20) not null  
-      - task4 varchar(20) not null  
-    login_user: postgres
-    login_password: "{{ db_password }}"
-    login_host: localhost
-
 - name: create user for replication
   community.postgresql.postgresql_user:
     db: test_students
     name: test_user
     password: "{{ test_user_password }}" 
-    role_attr_flags: REPLICATION
+    role_attr_flags: REPLICATION,LOGIN
     login_user: postgres
     login_password: "{{ db_password }}"
     login_host: localhost
@@ -75,8 +24,8 @@
   community.postgresql.postgresql_privs:
     db: test_students
     privs: ALL
-    type: schema
-    objs: public
+    #type: schema
+    objs: ALL_IN_SCHEMA
     role: test_user
     login_user: postgres
     login_password: "{{ db_password }}"
