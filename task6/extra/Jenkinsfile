@@ -1,0 +1,26 @@
+pipeline {
+    agent {label 'ubuntu_ansible'}
+    environment{
+        vault_password = credentials('vault_password')
+    }
+    stages {
+        stage('Pull from git') {
+            steps {
+                git credentialsId: 'for_git_project', url: 'git@github.com:YuryShcharbina/training_projects.git'
+            }
+        }
+        stage('Check files'){
+            steps{
+                sh '''
+                    ls -lh
+                '''
+                echo "Check Finished"
+            }
+        }
+        stage('Invoke playbook'){
+            steps{
+                ansiblePlaybook become: true, colorized: true, inventory: 'task6/extra/ansible_roles_replica/db_hosts', vaultCredentialsId: 'vault_password', playbook: 'task6/extra/ansible_roles_replica/create_postgre_cluster.yml'
+            }
+        }
+    }
+}

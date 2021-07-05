@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Install postgresql on instance
+Install Postgresql, additional packages and create test_students database
 
 Author Information
 ------------------

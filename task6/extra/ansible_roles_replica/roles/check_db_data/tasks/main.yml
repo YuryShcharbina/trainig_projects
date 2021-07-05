@@ -1,0 +1,12 @@
+---
+- name: test select query from database
+  community.postgresql.postgresql_query:
+    db: test_students
+    login_host: localhost
+    login_user: postgres
+    login_password: "{{ db_password }}"
+    query: select students.student, task1, task2, task3, task4 from students,result where students.studentid=result.studentid and students.student ~ 'Щербина'
+  register: result
+
+- debug:
+    var: result 

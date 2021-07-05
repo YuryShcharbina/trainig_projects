@@ -34,5 +34,11 @@ DROP TABLE
 ```
 
 ### Ansible playbook for logical replication
-Made several roles for installation postgresql on master and slave node, configure them for logical replication,
+Made several roles for installation postgresql on master and slave nodes, configure them for logical replication,
 and load test data to master server
+
+### Run Ansible playbook in Jenkins pipeline
+On Jenkins master need to install Ansible plugin for work with ansible module.
+In Jenkins file created pipeline for deploy postgresql logical replication:
+* pull repo from git
+* run ansible playbook for deploying postgresql database replication 

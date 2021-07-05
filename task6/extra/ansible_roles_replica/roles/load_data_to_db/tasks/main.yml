@@ -4,8 +4,9 @@
     src: "{{ item }}"
     dest: /tmp
   with_items:
-    - full_data.csv
-    - data_load.sql
+    - result.csv
+    - students.csv
+    - test_import.sql
 
 - name: load data to database test_students
-  shell: PGPASSWORD={{ db_password }} psql -h localhost -U postgres -d test_students -f /tmp/data_load.sql
+  shell: PGPASSWORD={{ db_password }} psql -h localhost -U postgres -d test_students -f /tmp/test_import.sql

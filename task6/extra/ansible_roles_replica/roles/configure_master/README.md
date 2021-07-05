@@ -1,7 +1,8 @@
 Role Name
 =========
 
-Configure master server for logical replication
+Configure master server
+
 
 Author Information
 ------------------
