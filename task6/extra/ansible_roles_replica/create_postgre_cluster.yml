@@ -1,0 +1,19 @@
+- name: Create Postgres cluster
+  hosts: all
+  roles:
+    - { role: postgres_install, become: yes }
+
+- name: Configure master server 
+  hosts: db_serv_master
+  roles:
+    - { role: configure_master, become: yes }
+
+- name: Configure slave server 
+  hosts: db_serv_slave
+  roles:
+    - { role: configure_slave, become: yes }
+
+- name: load data to database on master server
+  hosts: db_serv_master
+  roles:
+    - load_data_to_db 

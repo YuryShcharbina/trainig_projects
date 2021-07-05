@@ -1,0 +1,26 @@
+---
+- name: Add key for PostgreSQL repository
+  ansible.builtin.apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Add PostgreSQL repository into source list
+  ansible.builtin.apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main
+    state: present
+
+- name: Install PostgeSQL v13
+  apt:
+    name:
+      - postgresql-13
+      - postgresql-client-13
+    state: present
+    update_cache: yes
+
+- name: install addition packages for ansible
+  apt:
+    name:
+      - acl
+      - libpq-dev  
+      - python3-psycopg2
+    state: present

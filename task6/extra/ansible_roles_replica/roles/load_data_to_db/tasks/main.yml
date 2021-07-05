@@ -1,0 +1,11 @@
+---
+- name: copy data files to master server
+  copy:
+    src: "{{ item }}"
+    dest: /tmp
+  with_items:
+    - full_data.csv
+    - data_load.sql
+
+- name: load data to database test_students
+  shell: PGPASSWORD={{ db_password }} psql -h localhost -U postgres -d test_students -f /tmp/data_load.sql
