@@ -1,7 +1,7 @@
 ## Working with Zabbix
 ### Install Zabbix agent
-For installing agents created ansible role in folder *zabbix agent install*
-###Custom dashboards
+For installing agents created ansible role in folder *zabbix agent install*  
+### Custom dashboards
 The first:
 ![](images/dashboard1.png) 
 The second with map:
@@ -28,7 +28,7 @@ and check with ICMP ping:
 
 ![](images/icmp_ping.png)  
 
-###Alert with maintenance instruction
+### Alert with maintenance instruction
 In *My_test_template* creater trigger *test_port_check*
 ![](images/trigger.png)
 with url with instruction and created  action *Report to me*
