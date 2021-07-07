@@ -23,6 +23,7 @@ Each task located in separate folder with appropriate name.
   with dynamic inventory aws_ec2 plugin and jinja template 
 * Task5 - working with Jenkins
 * Task6 - working with Postgresql
+* Task7 - working with monitoring tools
 ___
 #### Last jobs status 
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master">

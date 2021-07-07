@@ -1,0 +1,5 @@
+- name: Install Zabbix agetnt on Ubuntu
+  hosts: all
+
+  roles:
+    - { role: install_zabbix_agent, become: yes} 
