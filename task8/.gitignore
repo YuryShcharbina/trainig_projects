@@ -1,0 +1,9 @@
+*.iml
+.DS_Store/
+.idea/
+out/
+venv/
+
+__pycache__/
+*.py[cod]
+*$py.class

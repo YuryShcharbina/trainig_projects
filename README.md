@@ -24,6 +24,7 @@ Each task located in separate folder with appropriate name.
 * Task5 - working with Jenkins
 * Task6 - working with Postgresql
 * Task7 - working with monitoring tools
+* Task8 - demonstration CI/CD pipeline in Gitlab for Django application
 ___
 #### Last jobs status 
 <br><image src="https://github.com/YuryShcharbina/training_projects/workflows/test-docker/badge.svg?branch=master">
@@ -35,4 +36,4 @@ Yury Shcharbina
 e-mail: yurickch@gmail.com
 
 ### Project status
-In progress
+Finished

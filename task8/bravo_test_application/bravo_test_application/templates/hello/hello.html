@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Users{% endblock %}
+{%block content%}
+
+<h2>Add a new user:</h2>
+<p>Application version: 1.0.2</p>
+<form action="{% url 'hello:add_user' %}" method="POST">
+    {% csrf_token %}
+    <label>
+        <input type="text" required placeholder="Input user name" name="user_name">
+    </label>
+    <button type="submit">Add user</button><br>
+</form>
+    <p>
+    Server IP address: {{ host_ip }}
+    </p>
+
+    <h3>Current users:</h3>
+    {% if users_list %}
+        {% for a in users_list %}
+            <p>{{a.user_name}}</p>
+        {% endfor %}
+
+    {% else %}
+        No users found!
+    {% endif %}
+
+{%endblock%}

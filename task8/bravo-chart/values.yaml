@@ -1,0 +1,20 @@
+container:
+    image_nginx   : registry.gitlab.com/bravo_group1/bravo_django_project/nginx:latest
+    image_webapp  : registry.gitlab.com/bravo_group1/bravo_django_project/webapp:lates
+    image_postgres: registry.gitlab.com/bravo_group1/bravo_django_project/postgresql:lates
+
+envs:
+    postgres_password   : value         # Postgresql superuser password
+    postgres_user       : value         # Postgresql superuser
+    postgres_db         : value         # Postgresql database for superuser
+    django_db_username  : value         # User in postgresql for django application
+    django_user_password: value         # User password in postgresql for django application
+    django_db_name      : value         # Database for django application
+    django_secret_key   : value         # Django secret key
+    django_debug        : False         # Django debug(True, False)
+    django_allowed_hosts: localhost     # Hosts allowed for django application
+    database_host       : value         # Hosts with postgresql for django application
+    database_port       : 5432          # Postgresql port
+    django_host_address : value         # Django application host for nginx proxy
+
+replicaCount: 2

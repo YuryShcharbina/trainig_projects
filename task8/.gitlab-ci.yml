@@ -1,0 +1,120 @@
+stages:
+ - build
+ - test
+ - push
+ - deploy
+
+variables:
+  IMAGE_PREFIX: $CI_REGISTRY/$CI_PROJECT_PATH
+
+docker-build:
+  image: docker:latest
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker pull ${IMAGE_PREFIX}/nginx:latest || true
+    - docker build  --cache-from $IMAGE_PREFIX/nginx:latest -f docker/nginx/Dockerfile --tag $IMAGE_PREFIX/nginx:latest .
+    - docker push ${IMAGE_PREFIX}/nginx:latest
+    - docker pull ${IMAGE_PREFIX}/webapp:latest || true
+    - docker build -f docker/django/Dockerfile -t ${IMAGE_PREFIX}/webapp --tag $IMAGE_PREFIX/webapp:latest .
+    - docker push ${IMAGE_PREFIX}/webapp:latest
+    - docker pull ${IMAGE_PREFIX}/postgresql:latest || true
+    - docker build -f docker/postgresql/Dockerfile -t ${IMAGE_PREFIX}/postgresql --tag $IMAGE_PREFIX/postgresql:latest .
+    - docker push ${IMAGE_PREFIX}/postgresql:latest
+  after_script:
+    - docker logout ${CI_REGISTRY}
+
+test_app:
+  image: docker:latest
+  stage: test
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - apk add postgresql-client
+    - apk add curl
+    - docker run --rm -d 
+      -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      -e POSTGRES_USER=$POSTGRES_USER
+      -e POSTGRES_DB=$POSTGRES_DB
+      -e DJANGO_DB_USERNAME=$DJANGO_DB_USERNAME
+      -e DJANGO_USER_PASSWORD=$DJANGO_USER_PASSWORD
+      -e DJANGO_DB_NAME=$DJANGO_DB_NAME 
+      --name db ${IMAGE_PREFIX}/postgresql
+    - sleep 10
+    - docker run --rm -d
+      -e DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+      -e DJANGO_DEBUG=$DJANGO_DEBUG
+      -e DJANGO_ALLOWED_HOSTS=$DJANGO_ALLOWED_HOSTS
+      -e DATABASE_NAME=$DJANGO_DB_NAME
+      -e DATABASE_USERNAME=$DJANGO_DB_USERNAME
+      -e DATABASE_PASSWORD=$DJANGO_USER_PASSWORD
+      -e DATABASE_HOST=$DATABASE_HOST
+      -e DATABASE_PORT=$DATABASE_PORT
+      --link db
+      --name webapp ${IMAGE_PREFIX}/webapp
+    - sleep 10
+    - docker run --rm -d
+      -e DJANGO_HOST_ADDRESS=$DJANGO_HOST_ADDRESS
+      -p 80:80 --link webapp
+      --name web $IMAGE_PREFIX/nginx
+    - sleep 10
+  script:
+    - docker exec webapp python manage.py migrate
+    - HTTP_STATUS="$(curl -IL --silent http://docker/hello | grep HTTP )"
+    - echo $HTTP_STATUS | grep 200 
+  after_script:
+    - docker stop web
+    - docker stop webapp
+    - docker stop db 
+    - docker logout ${CI_REGISTRY}
+
+bravo_images_tag:
+  image: docker:latest
+  variables:
+    GIT_STRATEGY: none
+  stage: push
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  script:
+    - docker pull $IMAGE_PREFIX/nginx:latest
+    - docker tag $IMAGE_PREFIX/nginx:latest $IMAGE_PREFIX/nginx:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_PREFIX/nginx:$CI_COMMIT_SHORT_SHA
+    - docker pull $IMAGE_PREFIX/webapp:latest
+    - docker tag $IMAGE_PREFIX/webapp:latest $IMAGE_PREFIX/webapp:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_PREFIX/webapp:$CI_COMMIT_SHORT_SHA
+    - docker pull $IMAGE_PREFIX/postgresql:latest
+    - docker tag $IMAGE_PREFIX/postgresql:latest $IMAGE_PREFIX/postgresql:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_PREFIX/postgresql:$CI_COMMIT_SHORT_SHA
+  after_script:
+    - docker logout $CI_REGISTRY
+
+
+bravo_deploy:
+  image: dtzar/helm-kubectl
+  stage: deploy
+  before_script:
+    - kubectl config set-cluster bravo-cluster --server="$KUBE_URL"
+    - kubectl config set clusters.bravo-cluster.certificate-authority-data "$KUBE_CA"
+    - kubectl config set-credentials gitlab-token --token="$KUBE_TOKEN"
+    - kubectl config set-context default --cluster=bravo-cluster --user=gitlab-token
+    - kubectl config use-context default 
+  script:
+    - helm upgrade bravo-app bravo-chart/ --install
+      --set container.image_postgres=$IMAGE_PREFIX/postgresql:$CI_COMMIT_SHORT_SHA
+      --set container.image_webapp=$IMAGE_PREFIX/webapp:$CI_COMMIT_SHORT_SHA
+      --set container.image_nginx=$IMAGE_PREFIX/nginx:$CI_COMMIT_SHORT_SHA
+      --set envs.postgres_password=$POSTGRES_PASSWORD
+      --set envs.postgres_user=$POSTGRES_USER
+      --set envs.postgres_db=$POSTGRES_DB
+      --set envs.django_db_username=$DJANGO_DB_USERNAME
+      --set envs.django_user_password=$DJANGO_USER_PASSWORD
+      --set envs.django_db_name=$DJANGO_DB_NAME
+      --set envs.django_secret_key=$DJANGO_SECRET_KEY
+      --set envs.django_debug=$DJANGO_DEBUG      
+      --set envs.django_allowed_hosts=$DJANGO_ALLOWED_HOSTS 
